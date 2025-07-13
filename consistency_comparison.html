@@ -107,34 +107,23 @@
                 color: #999;
                 font-style: italic;
             }
-            .comment-section {
+            .analysis-section {
                 margin-top: 20px;
                 padding: 15px;
-                background: #f9f9f9;
+                background: #f8f9fa;
                 border-radius: 8px;
-                border-left: 4px solid #2196F3;
+                border-left: 4px solid #28a745;
             }
-            .comment-label {
+            .analysis-label {
                 font-weight: bold;
                 margin-bottom: 8px;
-                color: #555;
+                color: #155724;
                 font-size: 14px;
             }
-            .comment-textarea {
-                width: 100%;
-                min-height: 80px;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                resize: vertical;
-                font-family: Arial, sans-serif;
+            .analysis-content {
+                color: #495057;
+                line-height: 1.5;
                 font-size: 14px;
-                box-sizing: border-box;
-            }
-            .comment-textarea:focus {
-                outline: none;
-                border-color: #2196F3;
-                box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
             }
             .summary-info {
                 background: #e8f5e9;
@@ -151,10 +140,60 @@
                     grid-template-columns: 1fr;
                 }
             }
+            html {
+                scroll-behavior: smooth;
+            }
+            a:hover {
+                text-decoration: underline !important;
+            }
         </style>
     </head>
     <body>
         <h1>VGGT 3D Reconstruction - Consistency Test Comparison</h1>
+
+        <div style="margin-bottom: 30px; padding: 25px; background: #fff; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h2 style="color: #333; margin-bottom: 20px; text-align: center;">Experiment Overview</h2>
+            <p style="margin-bottom: 15px; line-height: 1.6;">
+                Testing of VGGT's behavior when handling multi-view sketches where one view contains modifications (additions/deletions) not present in other views.
+            </p>
+            
+            <h3 style="color: #444; margin-top: 20px; margin-bottom: 15px;">Observations</h3>
+            
+            <div style="margin-bottom: 20px;">
+                <h4 style="color: #555; margin-bottom: 10px;">Addition Operations (9 cases)</h4>
+                <ul style="line-height: 1.8; margin-left: 20px;">
+                    <li><strong>Clean Integration (1/9):</strong> <a href="#plane" style="color: #007bff; text-decoration: none;">Plane</a> wing cube - successfully added with proper 3D geometry</li>
+                    <li><strong>Fragmentation (3/9):</strong> <a href="#chair" style="color: #007bff; text-decoration: none;">Chair</a>, <a href="#table" style="color: #007bff; text-decoration: none;">Table</a>, <a href="#armchair_1" style="color: #007bff; text-decoration: none;">Armchair 1</a> - produced multiple independent single-view reconstructions rather than unified 3D models</li>
+                    <li><strong>View-Dependent Quality (4/9):</strong> <a href="#sofa" style="color: #007bff; text-decoration: none;">Sofa</a>, <a href="#armchair_2" style="color: #007bff; text-decoration: none;">Armchair 2</a>, <a href="#lwg" style="color: #007bff; text-decoration: none;">Lwg</a>, <a href="#plane_triangle" style="color: #007bff; text-decoration: none;">Plane Triangle</a> - added elements appear 3D from certain angles, 2D-like from others</li>
+                    <li><strong>Geometric Distortion (1/9):</strong> <a href="#camera" style="color: #007bff; text-decoration: none;">Camera</a> - addition caused twisted/distorted geometry</li>
+                </ul>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <h4 style="color: #555; margin-bottom: 10px;">Deletion Operations (4 cases)</h4>
+                <ul style="line-height: 1.8; margin-left: 20px;">
+                    <li><strong>Deletion Ignored (2/4):</strong> <a href="#wagon" style="color: #007bff; text-decoration: none;">Wagon</a> wheels, <a href="#house" style="color: #007bff; text-decoration: none;">House</a> porch - targeted elements remained despite removal attempts</li>
+                    <li><strong>Fragmentation (1/4):</strong> <a href="#toothbrush" style="color: #007bff; text-decoration: none;">Toothbrush</a> - produced three separate single-view reconstructions</li>
+                    <li><strong>View-Dependent Deletion (1/4):</strong> <a href="#toothpaste" style="color: #007bff; text-decoration: none;">Toothpaste</a> cap - disappears from certain viewing angles, remains visible from others</li>
+                </ul>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <h4 style="color: #555; margin-bottom: 10px;">Special Cases</h4>
+                <ul style="line-height: 1.8; margin-left: 20px;">
+                    <li><a href="#wagon_hole" style="color: #007bff; text-decoration: none;">Wagon Hole</a>: Filling operation improved reconstruction quality (reduced fragmentation from 3 parts to 2 parts)</li>
+                    <li>Quality Dependencies: Objects with poor original reconstructions (<a href="#savon" style="color: #007bff; text-decoration: none;">Savon</a>, <a href="#table" style="color: #007bff; text-decoration: none;">Table</a>) showed degraded modification results</li>
+                </ul>
+            </div>
+            
+            <h3 style="color: #444; margin-top: 25px; margin-bottom: 15px;">Key Findings</h3>
+            <ol style="line-height: 1.8; margin-left: 20px;">
+                <li>Fragmentation is a major failure mode - affects 40% of cases (6/15)</li>
+                <li>Fragmentation creates independent single-view reconstructions (typically matching input view count) rather than unified multi-view models</li>
+                <li>View-dependent reconstruction quality - a common issue where modifications appear inconsistent across viewing angles</li>
+            </ol>
+        </div>
+
         <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: #f0f8ff; border-radius: 8px; font-size: 14px; color: #333;">
             <div style="margin-bottom: 10px;"><strong>VGGT Configuration Settings:</strong></div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; text-align: left; max-width: 800px; margin: 0 auto;">
@@ -166,7 +205,7 @@
             </div>
         </div>
     
-        <div class="object-comparison">
+        <div class="object-comparison" id="chair">
             <div class="object-title">Chair</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -249,18 +288,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_CHAIR"
-                    onblur="saveComment('CHAIR', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    Adding the bottom structure caused the reconstructed chair to split into two parts. While one piece contains the added structure, the overall integrity is lost.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="sofa">
             <div class="object-title">Sofa</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -343,18 +379,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_SOFA"
-                    onblur="saveComment('SOFA', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    Successfully added rectangular block, though some viewing angles appear more 2D-like.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="wagon">
             <div class="object-title">Wagon</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -447,18 +480,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_WAGON"
-                    onblur="saveComment('WAGON', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    Wheels remained despite the deletion attempt. The back surface changed from hollow to closed, but introduced new seam artifacts on the left side.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="armchair_1">
             <div class="object-title">Armchair 1</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -551,18 +581,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_armchair_1"
-                    onblur="saveComment('armchair_1', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    The original result already had many dense lines. The added cube was not integrated as intended. The result resembles two armchairs placed back-to-back, with armrest structures appearing on both sides.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="armchair_2">
             <div class="object-title">Armchair 2</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -645,18 +672,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_armchair_2"
-                    onblur="saveComment('armchair_2', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    Similar to the Sofa case, the added pyramid in the seat center was reconstructed partially, visible from certain angles but missing from the side views.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="camera">
             <div class="object-title">Camera</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -739,18 +763,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_camera"
-                    onblur="saveComment('camera', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    A rectangular structure was added to the reconstruction, but the resulting geometry appears more distorted and twisted compared to the input sketch.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="house">
             <div class="object-title">House</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -853,18 +874,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_house"
-                    onblur="saveComment('house', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    The porch structure remained despite the deletion attempt. The back surface changed from hollow to closed, but the left side became blank (reminds me of the Wagon case).
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="lwg">
             <div class="object-title">Lwg</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -947,18 +965,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_lwg"
-                    onblur="saveComment('lwg', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    Added cylindrical chimney appears 3D from certain angles but becomes 2D-like from others, similar to the Sofa and Armchair 2 cases.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="plane">
             <div class="object-title">Plane</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -1051,18 +1066,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_plane"
-                    onblur="saveComment('plane', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    Successfully integrated a cube structure onto the aircraft wing with clear 3D geometry and proper positioning.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="plane_triangle">
             <div class="object-title">Plane Triangle</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -1155,18 +1167,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_plane_triangle"
-                    onblur="saveComment('plane_triangle', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    Added cylinder appears 3D from some viewing angles but looks more 2D-like from others (similar to Sofa, Armchair 2, and Lwg cases).
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="savon">
             <div class="object-title">Savon</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -1259,18 +1268,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_savon"
-                    onblur="saveComment('savon', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    The original reconstruction already contained significant artifacts with overlapping and tangled lines. Added cylinder appears 3D from some angles and 2D from others, similar to the Plane Triangle case.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="table">
             <div class="object-title">Table</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -1353,18 +1359,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_table"
-                    onblur="saveComment('table', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    The original reconstruction shows misaligned assembly of parts (like clipping issues in 3D games). Adding the rectangular block caused the table to split into two parts (one piece contains the added block), similar to the Chair case.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="toothbrush">
             <div class="object-title">Toothbrush</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -1457,18 +1460,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_toothbrush"
-                    onblur="saveComment('toothbrush', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    The original reconstruction appears less clean. Removing the cylindrical part caused fragmentation into three parts, contrasting with the Wagon and House cases, where deletion was ignored without splitting.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="toothpaste">
             <div class="object-title">Toothpaste</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -1561,18 +1561,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_toothpaste"
-                    onblur="saveComment('toothpaste', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    Removing the cap from one view created inconsistent results: the cap disappears from certain viewing angles but remains visible from others, creating view-dependent deletion effects.
+                </div>
             </div>
         </div>
         
-        <div class="object-comparison">
+        <div class="object-comparison" id="wagon_hole">
             <div class="object-title">Wagon Hole</div>
         
             <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
@@ -1665,39 +1662,15 @@
             
             </div>
             
-            <div class="comment-section">
-                <div class="comment-label">Comments:</div>
-                <textarea 
-                    class="comment-textarea" 
-                    placeholder="Enter your evaluation of the reconstruction quality..."
-                    id="comment_wagon_hole"
-                    onblur="saveComment('wagon_hole', this.value)">
-                </textarea>
+            <div class="analysis-section">
+                <div class="analysis-label">Analysis:</div>
+                <div class="analysis-content">
+                    The original reconstruction already failed with three separate parts. Filling the hole in one view improved fusion partially, reducing fragmentation to two parts instead of three.
+                </div>
             </div>
         </div>
         
         
-        <script>
-            // Save comments to browser local storage
-            function saveComment(objectName, comment) {
-                localStorage.setItem('comment_' + objectName, comment);
-            }
-            
-            // Load previously saved comments when page loads
-            function loadComments() {
-                const textareas = document.querySelectorAll('.comment-textarea');
-                textareas.forEach(textarea => {
-                    const objectName = textarea.id.replace('comment_', '');
-                    const savedComment = localStorage.getItem('comment_' + objectName);
-                    if (savedComment) {
-                        textarea.value = savedComment;
-                    }
-                });
-            }
-            
-            // Restore comments when page is loaded
-            document.addEventListener('DOMContentLoaded', loadComments);
-        </script>
     </body>
     </html>
     
