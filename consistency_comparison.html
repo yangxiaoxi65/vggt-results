@@ -1,0 +1,1703 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>VGGT Consistency Test - Original vs Modified Comparison</title>
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px; 
+                background-color: #f5f5f5; 
+            }
+            h1 { 
+                text-align: center; 
+                color: #333; 
+                margin-bottom: 30px;
+            }
+            .object-comparison {
+                background: white;
+                margin-bottom: 50px;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .object-title {
+                font-size: 28px;
+                font-weight: bold;
+                color: #444;
+                margin-bottom: 20px;
+                text-align: center;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 10px;
+            }
+            .comparison-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                margin-top: 20px;
+            }
+            .version-section {
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                padding: 15px;
+                background: #fafafa;
+            }
+            .version-title {
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                text-align: center;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            .original-title {
+                background-color: #e3f2fd;
+                color: #1976d2;
+            }
+            .modified-title {
+                background-color: #fff3e0;
+                color: #f57c00;
+            }
+            .input-images {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            .input-image-container {
+                text-align: center;
+            }
+            .input-image {
+                width: 120px;
+                height: 120px;
+                object-fit: contain;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background: white;
+            }
+            .input-image-label {
+                font-size: 11px;
+                color: #666;
+                margin-top: 5px;
+                max-width: 120px;
+                word-wrap: break-word;
+            }
+            .model-container {
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background: #ffffff;
+                margin-top: 15px;
+            }
+            model-viewer {
+                width: 100%;
+                height: 500px;
+                background: #ffffff;
+            }
+            .info-text {
+                font-size: 14px;
+                color: #666;
+                text-align: center;
+                margin-top: 10px;
+            }
+            .no-data {
+                text-align: center;
+                padding: 50px;
+                color: #999;
+                font-style: italic;
+            }
+            .comment-section {
+                margin-top: 20px;
+                padding: 15px;
+                background: #f9f9f9;
+                border-radius: 8px;
+                border-left: 4px solid #2196F3;
+            }
+            .comment-label {
+                font-weight: bold;
+                margin-bottom: 8px;
+                color: #555;
+                font-size: 14px;
+            }
+            .comment-textarea {
+                width: 100%;
+                min-height: 80px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                resize: vertical;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                box-sizing: border-box;
+            }
+            .comment-textarea:focus {
+                outline: none;
+                border-color: #2196F3;
+                box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+            }
+            .summary-info {
+                background: #e8f5e9;
+                padding: 15px;
+                border-radius: 5px;
+                margin-bottom: 30px;
+                text-align: center;
+                font-size: 16px;
+                color: #2e7d32;
+                display: none;
+            }
+            @media (max-width: 1200px) {
+                .comparison-container {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>VGGT 3D Reconstruction - Consistency Test Comparison</h1>
+        <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: #f0f8ff; border-radius: 8px; font-size: 14px; color: #333;">
+            <div style="margin-bottom: 10px;"><strong>VGGT Configuration Settings:</strong></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; text-align: left; max-width: 800px; margin: 0 auto;">
+                <div><strong>Confidence Threshold:</strong> 50.0</div>
+                <div><strong>Show Camera:</strong> Enabled</div>
+                <div><strong>Filter Sky:</strong> Disabled</div>
+                <div><strong>Filter Black Background:</strong> Disabled</div>
+                <div><strong>Filter White Background:</strong> Enabled</div>
+            </div>
+        </div>
+    
+        <div class="object-comparison">
+            <div class="object-title">Chair</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: CHAIR_0_clean.png → CHAIR_3_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="CHAIR/original/images/CHAIR_0_clean.png" class="input-image" alt="CHAIR_0_clean.png">
+                                <div class="input-image-label">CHAIR_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="CHAIR/original/images/CHAIR_1_clean.png" class="input-image" alt="CHAIR_1_clean.png">
+                                <div class="input-image-label">CHAIR_1_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="CHAIR/original/CHAIR_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="CHAIR/modified/images/CHAIR_1_clean.png" class="input-image" alt="CHAIR_1_clean.png">
+                                <div class="input-image-label">CHAIR_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="CHAIR/modified/images/CHAIR_3_clean.jpg" class="input-image" alt="CHAIR_3_clean.jpg">
+                                <div class="input-image-label">CHAIR_3_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="CHAIR/modified/CHAIR_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_CHAIR"
+                    onblur="saveComment('CHAIR', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Sofa</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: SOFA1_0_clean.png → SOFA1_2_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="SOFA/original/images/SOFA1_0_clean.png" class="input-image" alt="SOFA1_0_clean.png">
+                                <div class="input-image-label">SOFA1_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="SOFA/original/images/SOFA1_1_clean.png" class="input-image" alt="SOFA1_1_clean.png">
+                                <div class="input-image-label">SOFA1_1_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="SOFA/original/SOFA_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="SOFA/modified/images/SOFA1_1_clean.png" class="input-image" alt="SOFA1_1_clean.png">
+                                <div class="input-image-label">SOFA1_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="SOFA/modified/images/SOFA1_2_clean.jpg" class="input-image" alt="SOFA1_2_clean.jpg">
+                                <div class="input-image-label">SOFA1_2_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="SOFA/modified/SOFA_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_SOFA"
+                    onblur="saveComment('SOFA', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Wagon</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: WAGON_03_0_clean.png → WAGON_03_3_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="WAGON/original/images/WAGON_03_0_clean.png" class="input-image" alt="WAGON_03_0_clean.png">
+                                <div class="input-image-label">WAGON_03_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="WAGON/original/images/WAGON_03_1_clean.png" class="input-image" alt="WAGON_03_1_clean.png">
+                                <div class="input-image-label">WAGON_03_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="WAGON/original/images/WAGON_03_2_clean.png" class="input-image" alt="WAGON_03_2_clean.png">
+                                <div class="input-image-label">WAGON_03_2_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="WAGON/original/WAGON_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="WAGON/modified/images/WAGON_03_1_clean.png" class="input-image" alt="WAGON_03_1_clean.png">
+                                <div class="input-image-label">WAGON_03_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="WAGON/modified/images/WAGON_03_2_clean.png" class="input-image" alt="WAGON_03_2_clean.png">
+                                <div class="input-image-label">WAGON_03_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="WAGON/modified/images/WAGON_03_3_clean.jpg" class="input-image" alt="WAGON_03_3_clean.jpg">
+                                <div class="input-image-label">WAGON_03_3_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="WAGON/modified/WAGON_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_WAGON"
+                    onblur="saveComment('WAGON', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Armchair 1</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: armchair1_0_clean.png → armchair1_3_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="armchair_1/original/images/armchair1_0_clean.png" class="input-image" alt="armchair1_0_clean.png">
+                                <div class="input-image-label">armchair1_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="armchair_1/original/images/armchair1_1_clean.png" class="input-image" alt="armchair1_1_clean.png">
+                                <div class="input-image-label">armchair1_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="armchair_1/original/images/armchair1_2_clean.png" class="input-image" alt="armchair1_2_clean.png">
+                                <div class="input-image-label">armchair1_2_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="armchair_1/original/armchair_1_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="armchair_1/modified/images/armchair1_1_clean.png" class="input-image" alt="armchair1_1_clean.png">
+                                <div class="input-image-label">armchair1_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="armchair_1/modified/images/armchair1_2_clean.png" class="input-image" alt="armchair1_2_clean.png">
+                                <div class="input-image-label">armchair1_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="armchair_1/modified/images/armchair1_3_clean.jpg" class="input-image" alt="armchair1_3_clean.jpg">
+                                <div class="input-image-label">armchair1_3_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="armchair_1/modified/armchair_1_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_armchair_1"
+                    onblur="saveComment('armchair_1', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Armchair 2</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: armchair_2views_0_clean.png → armchair_2views_2_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="armchair_2/original/images/armchair_2views_0_clean.png" class="input-image" alt="armchair_2views_0_clean.png">
+                                <div class="input-image-label">armchair_2views_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="armchair_2/original/images/armchair_2views_1_clean.png" class="input-image" alt="armchair_2views_1_clean.png">
+                                <div class="input-image-label">armchair_2views_1_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="armchair_2/original/armchair_2_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="armchair_2/modified/images/armchair_2views_1_clean.png" class="input-image" alt="armchair_2views_1_clean.png">
+                                <div class="input-image-label">armchair_2views_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="armchair_2/modified/images/armchair_2views_2_clean.jpg" class="input-image" alt="armchair_2views_2_clean.jpg">
+                                <div class="input-image-label">armchair_2views_2_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="armchair_2/modified/armchair_2_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_armchair_2"
+                    onblur="saveComment('armchair_2', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Camera</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: camera_0_clean.png → camera_2_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="camera/original/images/camera_0_clean.png" class="input-image" alt="camera_0_clean.png">
+                                <div class="input-image-label">camera_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="camera/original/images/camera_1_clean.png" class="input-image" alt="camera_1_clean.png">
+                                <div class="input-image-label">camera_1_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="camera/original/camera_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="camera/modified/images/camera_1_clean.png" class="input-image" alt="camera_1_clean.png">
+                                <div class="input-image-label">camera_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="camera/modified/images/camera_2_clean.jpg" class="input-image" alt="camera_2_clean.jpg">
+                                <div class="input-image-label">camera_2_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="camera/modified/camera_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_camera"
+                    onblur="saveComment('camera', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">House</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: house_4views_0_clean.png → house_4views_4_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="house/original/images/house_4views_0_clean.png" class="input-image" alt="house_4views_0_clean.png">
+                                <div class="input-image-label">house_4views_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="house/original/images/house_4views_1_clean.png" class="input-image" alt="house_4views_1_clean.png">
+                                <div class="input-image-label">house_4views_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="house/original/images/house_4views_2_clean.png" class="input-image" alt="house_4views_2_clean.png">
+                                <div class="input-image-label">house_4views_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="house/original/images/house_4views_3_clean.png" class="input-image" alt="house_4views_3_clean.png">
+                                <div class="input-image-label">house_4views_3_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="house/original/house_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="house/modified/images/house_4views_1_clean.png" class="input-image" alt="house_4views_1_clean.png">
+                                <div class="input-image-label">house_4views_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="house/modified/images/house_4views_2_clean.png" class="input-image" alt="house_4views_2_clean.png">
+                                <div class="input-image-label">house_4views_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="house/modified/images/house_4views_3_clean.png" class="input-image" alt="house_4views_3_clean.png">
+                                <div class="input-image-label">house_4views_3_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="house/modified/images/house_4views_4_clean.jpg" class="input-image" alt="house_4views_4_clean.jpg">
+                                <div class="input-image-label">house_4views_4_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="house/modified/house_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_house"
+                    onblur="saveComment('house', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Lwg</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: lwg_0_clean.png → lwg_3_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="lwg/original/images/lwg_0_clean.png" class="input-image" alt="lwg_0_clean.png">
+                                <div class="input-image-label">lwg_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="lwg/original/images/lwg_1_clean.png" class="input-image" alt="lwg_1_clean.png">
+                                <div class="input-image-label">lwg_1_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="lwg/original/lwg_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="lwg/modified/images/lwg_1_clean.png" class="input-image" alt="lwg_1_clean.png">
+                                <div class="input-image-label">lwg_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="lwg/modified/images/lwg_3_clean.jpg" class="input-image" alt="lwg_3_clean.jpg">
+                                <div class="input-image-label">lwg_3_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="lwg/modified/lwg_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_lwg"
+                    onblur="saveComment('lwg', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Plane</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: plane1_0_clean.png → plane1_3_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="plane/original/images/plane1_0_clean.png" class="input-image" alt="plane1_0_clean.png">
+                                <div class="input-image-label">plane1_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="plane/original/images/plane1_1_clean.png" class="input-image" alt="plane1_1_clean.png">
+                                <div class="input-image-label">plane1_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="plane/original/images/plane1_2_clean.png" class="input-image" alt="plane1_2_clean.png">
+                                <div class="input-image-label">plane1_2_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="plane/original/plane_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="plane/modified/images/plane1_1_clean.png" class="input-image" alt="plane1_1_clean.png">
+                                <div class="input-image-label">plane1_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="plane/modified/images/plane1_2_clean.png" class="input-image" alt="plane1_2_clean.png">
+                                <div class="input-image-label">plane1_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="plane/modified/images/plane1_3_clean.jpg" class="input-image" alt="plane1_3_clean.jpg">
+                                <div class="input-image-label">plane1_3_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="plane/modified/plane_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_plane"
+                    onblur="saveComment('plane', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Plane Triangle</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: plane_triangle2_0_clean.png → plane_triangle2_3_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="plane_triangle/original/images/plane_triangle2_0_clean.png" class="input-image" alt="plane_triangle2_0_clean.png">
+                                <div class="input-image-label">plane_triangle2_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="plane_triangle/original/images/plane_triangle2_1_clean.png" class="input-image" alt="plane_triangle2_1_clean.png">
+                                <div class="input-image-label">plane_triangle2_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="plane_triangle/original/images/plane_triangle2_2_clean.png" class="input-image" alt="plane_triangle2_2_clean.png">
+                                <div class="input-image-label">plane_triangle2_2_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="plane_triangle/original/plane_triangle_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="plane_triangle/modified/images/plane_triangle2_1_clean.png" class="input-image" alt="plane_triangle2_1_clean.png">
+                                <div class="input-image-label">plane_triangle2_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="plane_triangle/modified/images/plane_triangle2_2_clean.png" class="input-image" alt="plane_triangle2_2_clean.png">
+                                <div class="input-image-label">plane_triangle2_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="plane_triangle/modified/images/plane_triangle2_3_clean.jpg" class="input-image" alt="plane_triangle2_3_clean.jpg">
+                                <div class="input-image-label">plane_triangle2_3_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="plane_triangle/modified/plane_triangle_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_plane_triangle"
+                    onblur="saveComment('plane_triangle', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Savon</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: savon1_0_clean.png → savon1_4_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="savon/original/images/savon1_0_clean.png" class="input-image" alt="savon1_0_clean.png">
+                                <div class="input-image-label">savon1_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="savon/original/images/savon1_1_clean.png" class="input-image" alt="savon1_1_clean.png">
+                                <div class="input-image-label">savon1_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="savon/original/images/savon1_2_clean.png" class="input-image" alt="savon1_2_clean.png">
+                                <div class="input-image-label">savon1_2_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="savon/original/savon_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="savon/modified/images/savon1_1_clean.png" class="input-image" alt="savon1_1_clean.png">
+                                <div class="input-image-label">savon1_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="savon/modified/images/savon1_2_clean.png" class="input-image" alt="savon1_2_clean.png">
+                                <div class="input-image-label">savon1_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="savon/modified/images/savon1_4_clean.jpg" class="input-image" alt="savon1_4_clean.jpg">
+                                <div class="input-image-label">savon1_4_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="savon/modified/savon_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_savon"
+                    onblur="saveComment('savon', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Table</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: table_0_clean.png → table_2_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="table/original/images/table_0_clean.png" class="input-image" alt="table_0_clean.png">
+                                <div class="input-image-label">table_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="table/original/images/table_1_clean.png" class="input-image" alt="table_1_clean.png">
+                                <div class="input-image-label">table_1_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="table/original/table_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="table/modified/images/table_1_clean.png" class="input-image" alt="table_1_clean.png">
+                                <div class="input-image-label">table_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="table/modified/images/table_2_clean.jpg" class="input-image" alt="table_2_clean.jpg">
+                                <div class="input-image-label">table_2_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="table/modified/table_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_table"
+                    onblur="saveComment('table', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Toothbrush</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: toothbrush3_0_clean.png → toothbrush3_3_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="toothbrush/original/images/toothbrush3_0_clean.png" class="input-image" alt="toothbrush3_0_clean.png">
+                                <div class="input-image-label">toothbrush3_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="toothbrush/original/images/toothbrush3_1_clean.png" class="input-image" alt="toothbrush3_1_clean.png">
+                                <div class="input-image-label">toothbrush3_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="toothbrush/original/images/toothbrush3_2_clean.png" class="input-image" alt="toothbrush3_2_clean.png">
+                                <div class="input-image-label">toothbrush3_2_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="toothbrush/original/toothbrush_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="toothbrush/modified/images/toothbrush3_1_clean.png" class="input-image" alt="toothbrush3_1_clean.png">
+                                <div class="input-image-label">toothbrush3_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="toothbrush/modified/images/toothbrush3_2_clean.png" class="input-image" alt="toothbrush3_2_clean.png">
+                                <div class="input-image-label">toothbrush3_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="toothbrush/modified/images/toothbrush3_3_clean.jpg" class="input-image" alt="toothbrush3_3_clean.jpg">
+                                <div class="input-image-label">toothbrush3_3_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="toothbrush/modified/toothbrush_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_toothbrush"
+                    onblur="saveComment('toothbrush', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Toothpaste</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: toothpaste2_0_clean.png → toothpaste2_3_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="toothpaste/original/images/toothpaste2_0_clean.png" class="input-image" alt="toothpaste2_0_clean.png">
+                                <div class="input-image-label">toothpaste2_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="toothpaste/original/images/toothpaste2_1_clean.png" class="input-image" alt="toothpaste2_1_clean.png">
+                                <div class="input-image-label">toothpaste2_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="toothpaste/original/images/toothpaste2_2_clean.png" class="input-image" alt="toothpaste2_2_clean.png">
+                                <div class="input-image-label">toothpaste2_2_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="toothpaste/original/toothpaste_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="toothpaste/modified/images/toothpaste2_1_clean.png" class="input-image" alt="toothpaste2_1_clean.png">
+                                <div class="input-image-label">toothpaste2_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="toothpaste/modified/images/toothpaste2_2_clean.png" class="input-image" alt="toothpaste2_2_clean.png">
+                                <div class="input-image-label">toothpaste2_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="toothpaste/modified/images/toothpaste2_3_clean.jpg" class="input-image" alt="toothpaste2_3_clean.jpg">
+                                <div class="input-image-label">toothpaste2_3_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="toothpaste/modified/toothpaste_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_toothpaste"
+                    onblur="saveComment('toothpaste', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="object-comparison">
+            <div class="object-title">Wagon Hole</div>
+        
+            <div style="text-align: center; margin: 10px 0; color: #666; font-size: 14px;">
+                Modified: wagon_hole_06_0_clean.png → wagon_hole_06_3_clean.jpg
+            </div>
+                
+            <div class="comparison-container">
+        
+                <div class="version-section">
+                    <div class="version-title original-title">Original Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="wagon_hole/original/images/wagon_hole_06_0_clean.png" class="input-image" alt="wagon_hole_06_0_clean.png">
+                                <div class="input-image-label">wagon_hole_06_0_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="wagon_hole/original/images/wagon_hole_06_1_clean.png" class="input-image" alt="wagon_hole_06_1_clean.png">
+                                <div class="input-image-label">wagon_hole_06_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="wagon_hole/original/images/wagon_hole_06_2_clean.png" class="input-image" alt="wagon_hole_06_2_clean.png">
+                                <div class="input-image-label">wagon_hole_06_2_clean.png</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="wagon_hole/original/wagon_hole_original.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="version-section">
+                    <div class="version-title modified-title">Modified Version</div>
+            
+                    <div class="input-section">
+                        <h4 style="text-align: center;">Input Images:</h4>
+                        <div class="input-images">
+                
+                            <div class="input-image-container">
+                                <img src="wagon_hole/modified/images/wagon_hole_06_1_clean.png" class="input-image" alt="wagon_hole_06_1_clean.png">
+                                <div class="input-image-label">wagon_hole_06_1_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="wagon_hole/modified/images/wagon_hole_06_2_clean.png" class="input-image" alt="wagon_hole_06_2_clean.png">
+                                <div class="input-image-label">wagon_hole_06_2_clean.png</div>
+                            </div>
+                    
+                            <div class="input-image-container">
+                                <img src="wagon_hole/modified/images/wagon_hole_06_3_clean.jpg" class="input-image" alt="wagon_hole_06_3_clean.jpg">
+                                <div class="input-image-label">wagon_hole_06_3_clean.jpg</div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="reconstruction-section">
+                        <h4 style="text-align: center;">3D Reconstruction:</h4>
+                        <div class="model-container">
+                            <model-viewer 
+                                src="wagon_hole/modified/wagon_hole_modified.glb" 
+                                camera-controls 
+                                loading="eager"
+                                reveal="auto"
+                                camera-orbit="45deg 75deg auto"
+                                field-of-view="30deg"
+                            </model-viewer>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div class="comment-section">
+                <div class="comment-label">Comments:</div>
+                <textarea 
+                    class="comment-textarea" 
+                    placeholder="Enter your evaluation of the reconstruction quality..."
+                    id="comment_wagon_hole"
+                    onblur="saveComment('wagon_hole', this.value)">
+                </textarea>
+            </div>
+        </div>
+        
+        
+        <script>
+            // Save comments to browser local storage
+            function saveComment(objectName, comment) {
+                localStorage.setItem('comment_' + objectName, comment);
+            }
+            
+            // Load previously saved comments when page loads
+            function loadComments() {
+                const textareas = document.querySelectorAll('.comment-textarea');
+                textareas.forEach(textarea => {
+                    const objectName = textarea.id.replace('comment_', '');
+                    const savedComment = localStorage.getItem('comment_' + objectName);
+                    if (savedComment) {
+                        textarea.value = savedComment;
+                    }
+                });
+            }
+            
+            // Restore comments when page is loaded
+            document.addEventListener('DOMContentLoaded', loadComments);
+        </script>
+    </body>
+    </html>
+    
