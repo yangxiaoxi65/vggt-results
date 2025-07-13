@@ -187,33 +187,28 @@
             <h3 style="color: #444; margin-top: 20px; margin-bottom: 15px;">Observations</h3>
             
             <div style="margin-bottom: 20px;">
-                <h4 style="color: #555; margin-bottom: 10px;">Addition Operations (9 cases)</h4>
+                <h4 style="color: #555; margin-bottom: 10px;">Addition Operations (10 cases)</h4>
                 <ul style="line-height: 1.8; margin-left: 20px;">
-                    <li><strong>Clean Integration (1/9):</strong> <a href="#plane" style="color: #007bff; text-decoration: none;">Plane</a> wing cube - successfully added with proper 3D geometry</li>
-                    <li><strong>Fragmentation (3/9):</strong> <a href="#chair" style="color: #007bff; text-decoration: none;">Chair</a>, <a href="#table" style="color: #007bff; text-decoration: none;">Table</a>, <a href="#armchair_1" style="color: #007bff; text-decoration: none;">Armchair 1</a> - produced multiple independent single-view reconstructions rather than unified 3D models</li>
-                    <li><strong>View-Dependent Quality (4/9):</strong> <a href="#sofa" style="color: #007bff; text-decoration: none;">Sofa</a>, <a href="#armchair_2" style="color: #007bff; text-decoration: none;">Armchair 2</a>, <a href="#lwg" style="color: #007bff; text-decoration: none;">Lwg</a>, <a href="#plane_triangle" style="color: #007bff; text-decoration: none;">Plane Triangle</a> - added elements appear 3D from certain angles, 2D-like from others</li>
-                    <li><strong>Geometric Distortion (1/9):</strong> <a href="#camera" style="color: #007bff; text-decoration: none;">Camera</a> - addition caused twisted/distorted geometry</li>
+                    <li><strong>Clean Integration (1/10):</strong> <a href="#plane" style="color: #007bff; text-decoration: none;">Plane</a> wing cube - successfully added with proper 3D geometry</li>
+                    <li><strong>Fragmentation (3/10):</strong> <a href="#chair" style="color: #007bff; text-decoration: none;">Chair</a>, <a href="#table" style="color: #007bff; text-decoration: none;">Table</a>, <a href="#armchair_1" style="color: #007bff; text-decoration: none;">Armchair 1</a> - produced multiple independent single-view reconstructions rather than unified 3D models</li>
+                    <li><strong>View-Dependent Quality (4/10):</strong> <a href="#sofa" style="color: #007bff; text-decoration: none;">Sofa</a>, <a href="#armchair_2" style="color: #007bff; text-decoration: none;">Armchair 2</a>, <a href="#lwg" style="color: #007bff; text-decoration: none;">Lwg</a>, <a href="#plane_triangle" style="color: #007bff; text-decoration: none;">Plane Triangle</a> - added elements appear 3D from certain angles, 2D-like from others</li>
+                    <li><strong>Geometric Distortion (1/10):</strong> <a href="#camera" style="color: #007bff; text-decoration: none;">Camera</a> - addition caused twisted/distorted geometry</li>
+                    <li><strong>Poor Quality Context (1/10):</strong> <a href="#savon" style="color: #007bff; text-decoration: none;">Savon</a> - affected by poor original reconstruction</li>
                 </ul>
             </div>
             
             <div style="margin-bottom: 20px;">
-                <h4 style="color: #555; margin-bottom: 10px;">Deletion Operations (4 cases)</h4>
+                <h4 style="color: #555; margin-bottom: 10px;">Deletion Operations (5 cases)</h4>
                 <ul style="line-height: 1.8; margin-left: 20px;">
-                    <li><strong>Deletion Ignored (2/4):</strong> <a href="#wagon" style="color: #007bff; text-decoration: none;">Wagon</a> wheels, <a href="#house" style="color: #007bff; text-decoration: none;">House</a> porch - targeted elements remained despite removal attempts</li>
-                    <li><strong>Fragmentation (1/4):</strong> <a href="#toothbrush" style="color: #007bff; text-decoration: none;">Toothbrush</a> - produced three separate single-view reconstructions</li>
-                    <li><strong>View-Dependent Deletion (1/4):</strong> <a href="#toothpaste" style="color: #007bff; text-decoration: none;">Toothpaste</a> cap - disappears from certain viewing angles, remains visible from others</li>
+                    <li><strong>Deletion Ignored (2/5):</strong> <a href="#wagon" style="color: #007bff; text-decoration: none;">Wagon</a> wheels, <a href="#house" style="color: #007bff; text-decoration: none;">House</a> porch - targeted elements remained despite removal attempts</li>
+                    <li><strong>Fragmentation (1/5):</strong> <a href="#toothbrush" style="color: #007bff; text-decoration: none;">Toothbrush</a> - produced three separate single-view reconstructions</li>
+                    <li><strong>View-Dependent Deletion (1/5):</strong> <a href="#toothpaste" style="color: #007bff; text-decoration: none;">Toothpaste</a> cap - disappears from certain viewing angles, remains visible from others</li>
+                    <li><strong>Quality Improvement (1/5):</strong> <a href="#wagon_hole" style="color: #007bff; text-decoration: none;">Wagon Hole</a> - filling operation improved reconstruction quality (reduced fragmentation from 3 parts to 2 parts)</li>
                 </ul>
             </div>
             
-            <div style="margin-bottom: 20px;">
-                <h4 style="color: #555; margin-bottom: 10px;">Special Cases</h4>
-                <ul style="line-height: 1.8; margin-left: 20px;">
-                    <li><a href="#wagon_hole" style="color: #007bff; text-decoration: none;">Wagon Hole</a>: Filling operation improved reconstruction quality (reduced fragmentation from 3 parts to 2 parts)</li>
-                    <li>Quality Dependencies: Objects with poor original reconstructions (<a href="#savon" style="color: #007bff; text-decoration: none;">Savon</a>, <a href="#table" style="color: #007bff; text-decoration: none;">Table</a>) showed worse results when modified</li>
-                </ul>
-            </div>
             
-            <h3 style="color: #444; margin-top: 25px; margin-bottom: 15px;">Key Findings</h3>
+            <h3 style="color: #444; margin-top: 25px; margin-bottom: 15px;">Main Findings</h3>
             <ol style="line-height: 1.8; margin-left: 20px;">
                 <li>Fragmentation is a major failure mode - affects 33% of cases (5/15)</li>
                 <li>Fragmentation creates independent single-view reconstructions (typically matching input view count) rather than unified multi-view models</li>
